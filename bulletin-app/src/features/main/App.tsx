@@ -18,9 +18,21 @@ const App = () => {
 
     return (
         <>
-            <div>Hello world</div>
-            <p>hello world guys</p>
-            <PostList posts={posts}/>
+            <div>
+                <form method="post">
+                    <div>
+                        <label htmlFor="user">User</label>
+                        <input type="text" id="user"/>
+                    </div>
+                    <div>
+                        <label htmlFor="message">message</label>
+                        <input type="text" id="message"/>
+                    </div>
+                    
+                    <button>Post</button>
+                </form>
+                <PostList posts={posts}/>
+            </div>
         </>
     );
 };
