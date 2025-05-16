@@ -1,19 +1,25 @@
 import React from "react";
 import { useForm } from "react-hook-form";
+import { insertPost} from "../../db/post-db/aupabase_function";
+import { Post } from "../../models/interface";
 
-interface FormData {
-    user: string;
-    postTitle: string;
-    message: string;
-    createdAt: string;
-}
 
 const AddPost = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
+    const { register, handleSubmit, formState: { errors } } = useForm<Omit<Post, 'postId' | 'createdAt'>>();
     
-    const onSubmit = (data: FormData) => {
-        console.log(data); // データの確認用
-        // TODO: ここでデータをサーバーに送信する処理を実装
+    const onSubmit = async (data: Omit<Post, 'postId' | 'createdAt'>) => {
+        try {
+            const postData: Post = {
+                ...data,
+                postId: Date.now(), // 一時的なIDとして現在のタイムスタンプを使用
+                created_at: new Date().toISOString()
+            };
+            console.log('Submitting data:', postData);
+            const result = await insertPost([postData]);
+            console.log('Insert result:', result);
+        } catch (error) {
+            console.error('Error submitting post:', error);
+        }
     }
 
     return (
@@ -21,13 +27,13 @@ const AddPost = () => {
             <form onSubmit={handleSubmit(onSubmit)}>
                 {/* ユーザー名 */}
                 <div>
-                    <label htmlFor="user">User</label>
+                    <label htmlFor="username">User</label>
                     <input 
                         type="text" 
-                        id="user"
-                        {...register("user", { required: "ユーザー名は必須です" })}
+                        id="username"
+                        {...register("username", { required: "ユーザー名は必須です" })}
                     />
-                    {errors.user && <span style={{ color: 'red' }}>{errors.user.message}</span>}
+                    {errors.username && <span style={{ color: 'red' }}>{errors.username.message}</span>}
                 </div>
                 {/* 投稿タイトル */}
                 <div>
@@ -48,16 +54,6 @@ const AddPost = () => {
                         {...register("message", { required: "メッセージは必須です" })}
                     />
                     {errors.message && <span style={{ color: 'red' }}>{errors.message.message}</span>}
-                </div>
-                {/* 投稿日時 */}
-                <div>
-                    <label htmlFor="date">Date</label>
-                    <input 
-                        type="text" 
-                        id="date"
-                        {...register("createdAt", { required: "ユーザー名は必須です" })}
-                    />
-                    {errors.createdAt && <span style={{ color: 'red' }}>{errors.createdAt.message}</span>}
                 </div>
                 
                 <button type="submit">Post</button>
