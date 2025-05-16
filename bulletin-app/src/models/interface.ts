@@ -1,5 +1,10 @@
 
 export interface Post {
-    id: number;
+    postId: number;
     message: string;
+    postTitle: string;
+    user_id?: number;
+    username: string;
+    created_at?: string;
+
 }
