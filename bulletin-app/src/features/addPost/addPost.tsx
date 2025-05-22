@@ -23,40 +23,98 @@ const AddPost = () => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "40px" }}>
+            <form
+                onSubmit={handleSubmit(onSubmit)}
+                style={{
+                width: "400px",
+                padding: "30px",
+                border: "1px solid #ccc",
+                borderRadius: "10px",
+                boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
+                backgroundColor: "#fff",
+                }}
+            >
                 {/* ユーザー名 */}
-                <div>
-                    <label htmlFor="username">User</label>
-                    <input 
-                        type="text" 
+                <div style={{ marginBottom: "20px" }}>
+                    <label htmlFor="username" style={{ display: "block", fontWeight: "bold", marginBottom: "5px" }}>
+                        User
+                    </label>
+                    <input
+                        type="text"
                         id="username"
                         {...register("username", { required: "ユーザー名は必須です" })}
+                        style={{
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        }}
                     />
-                    {errors.username && <span style={{ color: 'red' }}>{errors.username.message}</span>}
+                    {errors.username && (
+                        <span style={{ color: "red", fontSize: "0.85rem" }}>{errors.username.message}</span>
+                    )}
                 </div>
+
                 {/* 投稿タイトル */}
-                <div>
-                    <label htmlFor="posttitle">Post title</label>
-                    <input 
-                        type="text" 
+                <div style={{ marginBottom: "20px" }}>
+                    <label htmlFor="posttitle" style={{ display: "block", fontWeight: "bold", marginBottom: "5px" }}>
+                        Post title
+                    </label>
+                    <input
+                        type="text"
                         id="posttitle"
-                        {...register("postTitle", { required: "ユーザー名は必須です" })}
+                        {...register("postTitle", { required: "タイトルは必須です" })}
+                        style={{
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        }}
                     />
-                    {errors.postTitle && <span style={{ color: 'red' }}>{errors.postTitle.message}</span>}
+                    {errors.postTitle && (
+                        <span style={{ color: "red", fontSize: "0.85rem" }}>{errors.postTitle.message}</span>
+                    )}
                 </div>
+
                 {/* 投稿メッセージ */}
-                <div>
-                    <label htmlFor="message">Message</label>
-                    <input 
-                        type="text" 
+                <div style={{ marginBottom: "20px" }}>
+                    <label htmlFor="message" style={{ display: "block", fontWeight: "bold", marginBottom: "5px" }}>
+                        Message
+                    </label>
+                    <textarea
                         id="message"
                         {...register("message", { required: "メッセージは必須です" })}
+                        style={{
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        maxWidth:"100%"
+                        }}
                     />
-                    {errors.message && <span style={{ color: 'red' }}>{errors.message.message}</span>}
+                    {errors.message && (
+                        <span style={{ color: "red", fontSize: "0.85rem" }}>{errors.message.message}</span>
+                    )}
                 </div>
-                
-                <button type="submit">Post</button>
+
+                {/* Submit ボタン */}
+                <button
+                type="submit"
+                style={{
+                    width: "100%",
+                    padding: "10px",
+                    backgroundColor: "gray",
+                    color: "#fff",
+                    border: "none",
+                    borderRadius: "5px",
+                    fontWeight: "bold",
+                    cursor: "pointer",
+                    transition: "background-color 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                    onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "black")}
+                    >Post</button>
             </form>
         </div>
     );
